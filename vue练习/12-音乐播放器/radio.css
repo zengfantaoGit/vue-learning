@@ -1,0 +1,237 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 24px;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to right top, #FF9F33, #33F4FF ) no-repeat;
+}
+#root {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    width: 1000px;
+    height: 600px;
+    max-height: 600px;
+    /*background-color: red;*/
+}
+
+#root header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    background-color: skyblue;
+}
+
+header .select {
+    display: flex;
+    align-items: center;
+    margin: 0 30px;
+}
+
+header > span {
+    margin: 0 30px;
+    font-family: 华文楷体, serif;
+}
+
+.select > span {
+    margin-left: -30px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+header input {
+    padding-left: 20px;
+    border-radius: 12px;
+    outline: none;
+    height: 30px;
+    width: 250px;
+    font-size: 14px;
+    background-color: rgba(66,66,66,.1);
+    color: rgba(0,0,0,1);
+}
+
+#root .body {
+    height: 400px;
+    display: flex;
+    flex: 1;
+    background-color: rgba(255,255,255,.6);
+}
+
+.body aside {
+    display: flex;
+    flex: 1
+}
+
+aside .singList {
+    width: 100%;
+}
+
+.body .left::after{
+    content: '';
+    display: inline-block;
+    width: 2px;
+    background: linear-gradient(transparent, #666 20%, #666 80%, transparent);
+}
+
+aside .comments {
+    margin-top: 10px;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.comments > span {
+    margin-left: 10px;
+    font: normal 700 20px '宋体';
+    color: black;
+}
+
+.comments img {
+    width: 40px;
+    height: 40px;
+    /*图片与文字与中线对齐，非底线对齐*/
+    vertical-align: middle;
+}
+
+.comments li span {
+    margin-left: 10px;
+}
+
+.comments li div,span {
+    margin: 8px 0;
+    font: normal 600 14px '宋体';
+    line-height: 18px;
+}
+
+div ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.body .right::before {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    background: linear-gradient(transparent, #666 20%, #666 80%, transparent);
+}
+
+.body main {
+    flex: 1.5;
+}
+
+#root footer {
+    height: 50px;
+    background-color: white;
+}
+
+.controller {
+    display: flex;
+    /*margin: 100px auto;*/
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: pink;
+}
+
+.controller > .control {
+    display: inline-block;
+    font-size: 30px;
+    color: blue;
+    cursor: pointer;
+}
+
+input[type='range'] {
+    outline: none;
+    /*-webkit-appearance: none; !*清除系统默认样式*!*/
+    width: 100% !important;
+    background: -webkit-linear-gradient(#10a9ff, #10a9ff) no-repeat, #dddddd; /*背景颜色，俩个颜色分别对应上下*/
+    background-size: 0% 100%; /*设置左右宽度比例，这里可以设置为拖动条属性*/
+    height: 4px; /*横条的高度，细的真的比较好看嗯*/
+}
+
+/*拖动块的样式*/
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none; /*清除系统默认样式*/
+    height: 10px; /*拖动块高度*/
+    width: 3px; /*拖动块宽度*/
+    background: #10a9ff; /*拖动块背景*/
+}
+
+.singListen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+/*使用滚动条伪类选择器将所有滚动条宽度变成 0*/
+::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+}
+
+li {
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    color: black;
+    cursor: pointer;
+}
+
+li:nth-of-type(2n+1) {
+    background-color: #D0D3D4;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+main .imgbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 250px;
+    background: url(./imgs/bg.png) no-repeat -179px -728px;
+    background-size: 475px auto;
+}
+
+main  img {
+    display: inline-block;
+    width: 170px;
+    height: 170px;
+    border-radius: 85px;
+    overflow: hidden;
+    /*旋转的动画，旋转的周期时长，以及模式等*/
+    animation: rotateImg 30s normal linear infinite;
+    animation-play-state: paused;
+}
+
+@keyframes rotateImg {
+    /*图片旋转360度*/
+    to {
+        transform: rotate(360deg);
+    }
+}

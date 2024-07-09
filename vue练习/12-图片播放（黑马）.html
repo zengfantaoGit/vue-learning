@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <button v-show="index > 0" @click="index--">上一页</button>
+    <br>
+    <img :src="imgUrlList[index]" alt="">
+    <br>
+    <button v-show="index < imgList.length - 1" @click="index++">下一页</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#root',
+        data() {
+            return {
+                imgList: [
+                    '10-01.png',
+                    '10-02.png',
+                    '11-00.gif',
+                    '11-01.gif',
+                    '11-02.gif',
+                    '11-03.gif',
+                    '11-04.png',
+                    '11-05.png',
+                ],
+                index: 0
+            }
+        },
+        computed: {
+            imgUrlList() {
+                return this.imgList.map((item) => {
+                    return `./images/${item}`
+                })
+            }
+        }
+    })
+</script>
+</html>

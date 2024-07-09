@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+        v-once:
+                属性在第一次渲染到页面时，就视为静态属性，不会随属性变化了
+-->
+<div id="root">
+    <h2 v-once>初始化n：{{n}}</h2>
+    <h2>n: {{n}}</h2>
+    <button @click="n++">点击N+1</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                n: 1
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

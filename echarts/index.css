@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.15;
+}
+
+header {
+    position: relative;
+    height: 100px;
+    background-color: pink;
+    color: white;
+}
+
+header h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+header .showTime {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    font-size: 17px;
+}
+
+.mainbox {
+    display: flex;
+    min-width: 1024px;
+    max-width: 1920px;
+    margin: 0 auto;
+    background-color: red;
+    padding: 10px 10px 0 0;
+}
+
+.mainbox .column {
+    flex: 3;
+}
+
+.mainbox .column:nth-of-type(2) {
+    flex: 5;
+}

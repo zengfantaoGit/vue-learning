@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--
+        生命周期：（也称为生命周期回调函数，生命周期钩子）
+        其中this1的指向为vm对象
+        这些钩子函数会在vm对象特定的时间段被调用
+        mounted（）在容器完全呈现在页面上时调用
+-->
+<body>
+<div id="root">
+    <h1 v-if="flag">聪明人</h1>
+    <!--    {opacity: opacity}的缩写形式，当key与value名称一样时使用-->
+    <h1 :style="{opacity}">{{name}}</h1>
+    <button @click="flag = !flag">点击添加标签到页面</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    window.onload = function(){
+        console.log("onload被执行了！")
+    }
+    const vm = new Vue({
+        data() {
+            return {
+                name: 'hello world！！！',
+                opacity: 0.5,
+                flag: false
+            }
+        },
+        // 当容器第一次完全都渲染到页面上时调用，之后再放入标签时不会调用mounted函数，此时页面存在所有的标签变量
+        mounted(){
+            console.log("mounted被调用了")
+            setInterval(() => {
+                this.opacity -= 0.01
+                if(this.opacity <= 0) this.opacity = 1
+            },10)
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

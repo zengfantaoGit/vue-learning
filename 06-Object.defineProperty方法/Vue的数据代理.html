@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+  <h1>{{name}}</h1>
+<!--  vm中存在data数据，通过数据代理的方式直接使用data中的值
+      vm._data就是存放着构造参数data的值
+-->
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  data = {
+    name: '男男女女'
+  }
+  const vm = new Vue({
+    el: '#root',
+    data: data
+  })
+  console.log(vm._data === data)
+</script>
+</html>

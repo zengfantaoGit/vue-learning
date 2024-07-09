@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <div>今天天气很{{weather}}</div>
+    <br>
+    <button @click="changeWeather">切换天气</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                isHot: true
+            }
+        }
+        , computed: {
+            weather(){
+                return this.isHot ? '炎热' : '凉爽'
+            }
+        }
+        , methods: {
+            changeWeather(){
+                this.isHot = !this.isHot
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

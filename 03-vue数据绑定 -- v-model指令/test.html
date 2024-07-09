@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    html {
+        color-scheme: dark;
+    }
+    #root {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 500px;
+    }
+</style>
+<script src="../js/vue.js"></script>
+<body>
+<div id="root">
+    <!--  v-bind只支持单项绑定 数据 -> 页面 不支持 从页面到数据模型 -->
+    单项数据绑定：<input type="text" :value="name"><br>
+    <!--    v-model支持双向数据绑定，支持页面 <==> 数据模型-->
+    双向数据绑定：<input type="text" v-model:value="name">
+    <!--    但v-model只能用在有输入的表单标签内，如输入框，单选双选框等-->
+    <!--    <h1 v-model:style="name"></h1>-->
+
+    <!--  当v-model为下拉列表选中数据时，v-model绑定数据与选中数据形成绑定  -->
+    下拉列表：<select name="cars" v-model="select">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="fiat">Fiat</option>
+    <option value="audi">Audi</option>
+</select>
+
+<!--    v-model与文本域绑定时，绑定的内容就是文本域的内容，文本域的原生内容将被无视-->
+    文本域：<textarea name="message" rows="10" cols="30" v-model="text">
+The cat was playing in the garden.
+</textarea>
+
+<!--    <button v-model="click">点击下</button>-->
+
+<!--
+    v-model与单选框绑定，绑定的属性将与radio的value属性同步
+    修改v-model绑定的属性，会改变选中的元素
+-->
+    <input type="radio" name="1" v-model.number="radio" value="1">
+    <input type="radio" name="1" v-model.number="radio" value="2">
+    <input type="radio" name="1" v-model.number="radio" value="3">
+
+<!--
+        v-model与复选框绑定需要用数组属性绑定，每次点击复选框会选中该
+        属性内的元素
+-->
+    <input type="checkbox" name="1" v-model.number="checkbox" value="1">
+    <input type="checkbox" name="1" v-model.number="checkbox" value="2">
+    <input type="checkbox" name="1" v-model.number="checkbox" value="3">
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            name: 'abcd',
+            select: 'saab',
+            text: '',
+            radio: 1,
+            checkbox: []
+        }
+    })
+</script>
+</html>

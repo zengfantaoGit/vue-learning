@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+  <input type="text" v-model:value="name"><br>
+  <input type="text" v-model:value="code"><br>
+  <div>{{`${name.substring(0,3)}-${code.substring(0,3)}`}}</div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    data(){
+      return {
+        name: '张',
+        code: '三'
+      }
+    }
+  })
+  vm.$mount("#root")
+</script>
+</html>

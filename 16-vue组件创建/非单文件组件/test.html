@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+                非单文件组件：即一个文件存在多个组件形式
+                单文件组件： 一个文件只存在一个组件（常用）
+
+                1.组件注册 Vue.extend(options) 与new Vue(options)的配置项大致相同。但也有差异：
+                    1.组件注册时，不能配置el配置项（因为为容器服务的配置是需要vm实例对象决定的，组件只能跟随实例对象服务容器）
+                    2.data配置项只能编写成函数式（防止被多次引用时，拿到同一个对象的问题）
+                    3.可以使用template配置项配置组件的html结构
+                    4.可以使用name配置项，决定Vue组件在开发者工具中显示的名称
+
+                2.组件使用流程： 构建组件--》注册组件（全局/局部）--》放置页面显示
+
+                3.注册：全局Vue.component('组件名称'，组件对象)
+                        局部在Vue实例对象的components配置项中配置组件
+
+-->
+<div id="root">
+    <!--    使用组件标签显示页面-->
+    <school></school>
+    <hr>
+<!--    相同组件的数据不会互相干扰-->
+    <student></student>
+    <student></student>
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<script>
+    <!--    生成一个组件Vue.extend-->
+    const school = Vue.extend({
+        name: 'ssddd',
+        template: `
+          <div>
+          <h2>学校名称：{{ name }}</h2>
+          <h2>学校地址：{{ address }}</h2>
+          <button @click="show">点击</button>
+          </div>
+        `,
+        data() {
+            return {
+                name: '牛魔',
+                address: '是单独收费'
+            }
+        },
+        methods:{
+            show(){
+                alert(1)
+            }
+        }
+    })
+
+    const student = Vue.extend({
+        template: `
+          <div>
+          <h2>学生名称：{{ name }}</h2>
+          <h2>学生年龄：{{ age }}</h2>
+          </div>
+        `,
+        data() {
+            return {
+                name: '对身份',
+                age: 18
+            }
+        }
+    })
+
+
+    // 全局注册
+    Vue.component('school',school)
+    Vue.component('student',student)
+    const vm = new Vue({
+        el: '#root',
+        // 注册组件（局部注册）
+        // components: {
+        //     // 可以用school的简写形式，key是组件被注册的名称，value是构建组件
+        //     school: school,
+        //     student: student
+        // }
+    })
+</script>
+</html>

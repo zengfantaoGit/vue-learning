@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  table {
+    /*display: block;*/
+    width: max-content;
+    margin: 100px auto;
+    border-collapse: collapse;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  th,
+  td {
+    display: inline-block;
+    width: 150px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border: 1px solid #888;
+  }
+  th {
+    background-color: #666;
+  }
+
+  tr:last-child >td {
+    width: 606px;
+  }
+
+  .underGrade {
+    color: red
+  }
+</style>
+<body>
+<div id="root">
+  <table>
+    <tr>
+      <th>编号</th>
+      <th>科目</th>
+      <th>成绩</th>
+      <th>操作</th>
+    </tr>
+    <tr v-for="(Class,index) in arrGrade" :key="Class.id">
+      <td>{{Class.id}}</td>
+      <td>{{Class.class}}</td>
+<!--      小于60分时，字体颜色变红-->
+      <td :class="{'underGrade': Class.grade < 60}">{{Class.grade}}</td>
+      <td><a href="#" @click="deleteGrade(index)">删除</a></td>
+    </tr>
+    <tr>
+      <td rowspan="4">总分：{{sumGrade}} &nbsp;&nbsp;平均分：{{aveGrade}}</td>
+    </tr>
+  </table>
+  
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<script>
+  new Vue({
+    data(){
+      return {
+        arrGrade: [
+          {id: 1,class: '语文',grade: 46},
+          {id: 2,class: '英语',grade: 80},
+          {id: 3,class: '数学',grade: 100}
+        ]
+      }
+    },
+    computed: {
+      // 计算总分
+      sumGrade(){
+        return this.arrGrade.reduce((prev,current) => {
+          return prev + current.grade
+        },0)
+      },
+      // 计算平均分
+      aveGrade(){
+        return this.arrGrade.length === 0 ? 0 : Math.floor(this.sumGrade / this.arrGrade.length)
+      }
+    },
+    methods: {
+      deleteGrade(index){
+        this.arrGrade.splice(index,1)
+      }
+    }
+  }).$mount('#root')
+</script>
+</html>

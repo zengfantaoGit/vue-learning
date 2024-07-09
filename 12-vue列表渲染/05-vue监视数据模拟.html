@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--
+              配置观察者Observer，使其能够监测到data数据的变化，
+              此时obj对象与data对象实现双向数据绑定
+-->
+<body>
+
+</body>
+<script>
+    let data = {
+        name: '牛魔',
+        age: 18
+    }
+
+    function Observer(data) {
+        //  获取data对象中的所有键值
+        var arr = Object.keys(data);
+        // 为arr的每个键位都配置对应的数据代理，即get与set
+        arr.forEach((p) => {
+            console.log(p)
+            Object.defineProperty(this, p, {
+                get() {
+                    console.log(`${p}被获取了`)
+                    return data[`${p}`]
+                },
+                set(val) {
+                    console.log(`${p}被修改了，修改值是${val}，之后响应到页面处`)
+                    data[`${p}`] = val
+                }
+            })
+        })
+    }
+
+    var obj = new Observer(data);
+
+</script>
+</html>

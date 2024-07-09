@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+            计算属性：在Vue实例对象中不存在，用对象中已经存在的属性计算出来的属性
+            在Vue构造函数中的compute配置项中，且配置完后将会出现在vm对象的属性中（可直接使用）。
+            在定义中需要提供get方法或set方法(底层实现数据代理)。
+            get方法执行时机:
+            1.在第一次被使用调用(之后的读取将会调用缓存中的数据，不会被重复调用)
+            2.在依赖的属性被修改时调用。
+            3.自身数据被修改时
+            比methods方法可以减少被调用次数。
+            ps:
+                在结果中计算属性是以属性存在vm对象中，不存在get或set方法
+-->
+<div id="root">
+  <input type="text" v-model:value="name"><br>
+  <input type="text" v-model:value="code"><br>
+  <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    data(){
+      return {
+        name: 'sk',
+        code: 'num'
+      }
+    }
+    ,computed:{
+        fullName:{
+            // 第一次读取被调用或者依赖的属性被修改后
+            get(){
+                console.log('get方法被调用了')
+                return this.name + '-' + this.code
+            },
+            // 当fullName被修改时调用,无返回值
+            set(val){
+                console.log('set方法被调用了'+val)
+                let arr = val.split('-')
+                this.name = arr[0]
+                this.code = arr[1]
+            }
+        }
+      }
+  })
+  vm.$mount("#root")
+</script>
+</html>

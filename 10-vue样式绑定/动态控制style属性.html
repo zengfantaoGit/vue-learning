@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .round {
+      width: 400px;
+      height: 200px;
+      margin: 20px;
+      border-radius: 100px;
+      border: 1px dotted blue;
+    }
+    .round h1 {
+      width: max-content;
+      margin: 50px auto;
+    }
+    .bg {
+      background-color: red;
+    }
+    .shadow {
+      box-shadow: 2px 2px 8px 2px;
+    }
+  </style>
+</head>
+<!--
+        style的动态绑定：
+        :style='{属性1：值1，属性2：值2}'
+-->
+<body>
+<div id="root">
+  <div class="round" :class="{'bg': isBg, 'shadow': isShadow}">
+    <h1>你好啊</h1>
+  </div>
+  <div class="round" :class="['bg','shadow']">
+    <h1>吃饭</h1>
+  </div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  new Vue({
+    el: '#root',
+    data(){
+      return {
+        isBg: false,
+        isShadow: true
+      }
+    }
+  })
+</script>
+</html>

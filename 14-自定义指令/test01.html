@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--
+          自定义属性：在directives中配置指令名称 例如 dds 则在标签调用时使用 v-dds
+          对象式指令配置：
+                   bind() ： 当指令第一次与标签绑定时调用
+                   inserted()       ：当指令所在的标签被插入时调用
+                   update()  ： 当模板重新解析时调用
+-->
+<body>
+<div id="root">
+    <h2>{{name}}</h2>
+<!--    <h2 v-big="value"></h2>-->
+    <button @click="value++">点击value+1</button>
+    <hr>
+    <input type="text" v-fbind="value">
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                name: 'absd',
+                value: 1
+            }
+        },
+        directives: {
+            // 函数式配置指令，其中el是所处的真实dom元素的dom元素，binding是所配置的对象
+            // big函数调用时机：1.当v-big指令第一次完成绑定时调用，2.当模板重新解析时调用（即每个属性被修改时调用）
+            big(el, binding) {
+                console.log(el, binding)
+                el.innerText = binding.value * 10
+            },
+        //     对象式配置指令
+            fbind: {
+                // 标签与指令完成绑定，但标签还未插入页面时调用
+                bind(el,binding){
+                    console.log(el,binding,'bind')
+                    el.value = binding.value
+                },
+                // 标签插入页面时调用
+                inserted(el,binding){
+                    console.log(el,binding,'inserted')
+                    // 获取焦点
+                    el.focus()
+                },
+            //     标签所在模板重新解析时调用
+                update(el,binding){
+                    console.log(el,binding,'updated')
+                    el.value = binding.value
+                }
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

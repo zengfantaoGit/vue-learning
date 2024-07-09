@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    a {
+        text-decoration: none;
+        color: red;
+    }
+</style>
+<body>
+<div id="root">
+    <h1>插值语法</h1>
+    <h1>你好, {{name}}</h1>
+    {{<h1>name</h1>}}
+    <h1>指令语法</h1>
+<!--    <a v-bind:href="url">点击我</a>-->
+    <a :href="url">点击下吧</a>
+</div>
+</body>
+<!--
+    Vue的模板语法：
+      1.插值语法：
+        功能：解析标签体内容。指innerhtml的内容
+        写法：{{xxx}}, xxx是js表达式，可以直接读取对应Vue对象的所有属性
+
+      2.指令语法：
+        功能：解析标签内容（包含标签属性，标签体，事件绑定）
+        写法：例如V-bind:src='xxx' 可以将Vue对象中的xxx属性与标签的src属性进行绑定。
+        也可以:src缩写
+
+-->
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: 'jack',
+            url: 'https://www.baidu.com'
+        }
+    })
+</script>
+</html>

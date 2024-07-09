@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+  }
+</style>
+<body>
+<div id="root">
+  <ul>
+    <li v-for="item in List" :key="item.id">
+      {{item.title}}
+    </li>
+  </ul>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script>
+  const vm = new Vue({
+    // el: '#root',
+    data(){
+      return {
+        List: []
+      }
+    },
+    created() {
+      // 在created钩子中，data数据监听与数据代理已经完成，所有可以调用data与methods方法
+      axios.get('http://hmajax.itheima.net/api/news').then((resp) => {
+        console.log(resp.data)
+        // 获取数据放入已经被代理的List中
+        this.List = resp.data.data
+      },(error) => {
+        console.log(error)
+      })
+    }
+  })
+
+  // 它会一直等待$mount进行挂载节点，否则页面一直显示原生dom树
+  setTimeout(() => {
+      vm.$mount('#root')
+  },5000)
+</script>
+</html>

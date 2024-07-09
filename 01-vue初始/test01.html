@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+<!--    插值语法-->
+<!--    允许插入所有直接存在vm对象下的属性或者是字面量-->
+    <h1>hello,{{name}}</h1>
+    <button v-on:click="changes($event)">改个名字</button>
+    {{send()}}
+</div>
+<script src="../js/vue.js"></script>
+<script>
+    function aaa(){
+        return 'aaa'
+    }
+    <!--    阻止vue给出生产者模式下的提示-->
+    Vue.config.productionTip = false
+    // 创建Vue实例
+    const vm = new Vue({
+        // el用于指定当前Vue实例为哪个容器服务，id选择器选中root容器
+        el: '#root',
+        // 配置当前容器的数据
+        data: {
+            name: 'sdsf'
+        },
+        methods:{
+            changes: function ($event){
+                console.log($event)
+                this.name = 'aaasd'
+            },
+            send() {
+                // console.log($event)
+                alert(1)
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+    }
+    th,
+    td {
+        border: 1px solid black;
+    }
+    th {
+        padding: 0 60px;
+        font-weight: 700;
+    }
+</style>
+<script src="../js/vue.js"></script>
+<body>
+<div id="root">
+    <h4>请选择你想要购买的书籍</h4>
+    <ul>
+        <li>
+            水浒传
+            <button @click="Buy(0)">买书</button>
+        </li>
+        <li>
+            西游记
+            <button @click="Buy(1)">买书</button>
+        </li>
+        <li>
+            三国演义
+            <button @click="Buy(2)">买书</button>
+        </li>
+        <li>
+            红楼梦
+            <button @click="Buy(3)">买书</button>
+        </li>
+    </ul>
+    <table>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>书名</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>合计</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>水浒传</td>
+            <td>{{priceBook[0]}}</td>
+            <td>{{arrNum[0]}}</td>
+            <td>{{sumBook[0]}}</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>西游记</td>
+            <td>{{priceBook[1]}}</td>
+            <td>{{arrNum[1]}}</td>
+            <td>{{sumBook[1]}}</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>三国演义</td>
+            <td>{{priceBook[2]}}</td>
+            <td>{{arrNum[2]}}</td>
+            <td>{{sumBook[2]}}</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>红楼梦</td>
+            <td>{{priceBook[3]}}</td>
+            <td>{{arrNum[3]}}</td>
+            <td>{{sumBook[3]}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    总价格为：{{sumBook.reduce((prev, item) => prev += item), 0}}
+</div>
+</body>
+<script>
+    const vm = new Vue({
+        data(){
+            return {
+                arrNum: [0,0,0,0],
+                priceBook: [107,192,219,178]
+            }
+        },
+        computed: {
+            sumBook(){
+                return this.arrNum.map((item,index) => {
+                    return item * this.priceBook[index]
+                })
+            }
+        },
+        methods: {
+            Buy(index){
+                this.arrNum = this.arrNum.map((item,index1) => {
+                    if(index1 === index) item += 1
+                    return item
+                })
+            }
+        }
+    }).$mount("#root")
+</script>
+</html>

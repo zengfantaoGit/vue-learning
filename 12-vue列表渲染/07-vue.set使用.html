@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--
+          vm实例对象无法在实例化后再直接插入新的属性，因为新加入的属性不会再有get与set方法，无法响应式视图。
+          若要在实例化后插入新的属性，则使用Vue.set()或者vm.$set()方法
+
+              1.Vue.set(a,b,c)
+                  a: 要插入的对象（不能是data根对象或者vm实例对象）
+                  b: 被插入的属性
+                  c: 插入的值
+              2. vm.$set(a,b,c)
+                  a: 要插入的对象（不能是data根对象或者vm实例对象）
+                  b: 被插入的属性
+                  c: 插入的值
+-->
+<div id="root">
+  <button @click="addSex">插入学校性别（默认是男）</button>
+  <h2>姓名：{{school.name}}</h2>
+  <h2>年龄：{{school.age}}</h2>
+  <h2>校长：{{school.leader}}</h2>
+  <h2 v-show="school.sex">性别：{{school.sex}}</h2>
+  <h2>地址：{{school.address.name}}</h2>
+  <h2>地址年龄：{{school.address.age}}</h2>
+
+  <ul>
+    <li v-for="(friend,index) in friends">
+      {{friend.name}}----{{friend.age}}----{{friend.sex}}
+    </li>
+  </ul>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    data() {
+      return {
+        school: {
+          name: '童心学校',
+          age: 23,
+          leader: '张思德',
+          address:{
+            name:"东百网上",
+            age: 1234
+          }
+        },
+        friends: [
+          {id: '001', name: '唐僧', age: '18', sex: '男'},
+          {id: '002', name: '沙僧', age: '12', sex: '男'},
+          {id: '003', name: '孙悟空', age: '17', sex: '男'},
+          {id: '004', name: '唐人', age: '20', sex: '男'},
+          {id: '005', name: '白龙马', age: '15', sex: '女'},
+        ]
+      }
+    },
+    methods:{
+      addSex(){
+        // 插入新的属性
+        // Vue.set(this._data.school,'sex','男')
+        this.$set(this._data.school,'sex','男')
+      }
+    }
+  })
+  vm.$mount("#root")
+</script>
+</html>

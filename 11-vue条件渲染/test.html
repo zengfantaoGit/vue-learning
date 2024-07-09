@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+        条件渲染：符合当前条件时就展示标签，否则就隐藏
+        v-if: 用法v-if='表达式' 为真则显示
+               v-if适用于切换频率较低的标签中
+               v-if是将整个标签进行移除
+               且可以配合v-else-if 与 v-else一同使用，必须靠在一起
+
+         v-show: 用法与v-if相同。
+                  v-show适用于切换频率较高的标签中，
+                  v-show只是在标签中添加display: none的样式实现标签隐藏的效果
+
+         template表签可以在不破坏标签结构的情况下，包裹标签
+         但它只能与v-if条件渲染语句使用
+-->
+<div id="root">
+  <button @click="num++">点击num+1</button>
+  <br><br>
+  <h2 v-if="num === 1">你好啊1</h2>
+  <h2 v-else-if="num === 2">你好啊2</h2>
+  <h2 v-else>你不好</h2>
+  <br><br><br><br>
+  <button @click="numShow++">点击numShow+1</button>
+  <br><br>
+  <h2 v-show="numShow === 1">你好啊1</h2>
+  <h2 v-show="numShow === 2">你好啊2</h2>
+  <h2 v-show="numShow === 3">你不好</h2>
+  <br><br><br><br>
+  <template v-if="num === 1">
+    <h2>你你你</h2>
+    <h2>哇哇哇哇</h2>
+  </template>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    data(){
+      return {
+        num: 0,
+        numShow: 0
+      }
+    }
+  })
+  vm.$mount("#root")
+</script>
+</html>

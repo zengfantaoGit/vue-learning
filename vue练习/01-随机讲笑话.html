@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <h2>{{arr[index]}}</h2>
+    <button @click="randomChange">点击随机切换</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                arr: [
+                    '这是个笑话吧',
+                    '你妈妈',
+                    '您能',
+                    '牛魔'
+                ],
+                index: 0
+            }
+        },
+        methods:{
+            randomChange(){
+                let index = Math.floor(Math.random() * this.arr.length)
+                console.log(index,this.arr.length)
+                this.index = index
+            }
+        },
+        watch: {
+            index(newValue,oldValue){
+                console.log(`切换到下条笑话，原笑话:${this.arr[oldValue]}，新笑话：${this.arr[newValue]}`)
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

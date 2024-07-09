@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>哈皮播放器</title>
+    <link rel="stylesheet" href="./radio.css">
+    <link rel="stylesheet" href="./fontIcon/iconfont.css">
+</head>
+<body>
+<div id="root">
+    <header>
+        <span>悦听</span>
+        <div class="select">
+            <input type="text" placeholder="五月天" v-model.trim="checkName" @keyup.enter="offsetSing=0;searchSing(checkName)">
+            <span class="iconfont">&#xe636;</span>
+        </div>
+    </header>
+    <div class="body">
+        <aside class="left">
+            <!--            歌单列表-->
+            <div class="singList">
+                <ul class="singListen">
+                    <li v-show="offsetSing > 0"><a href="#" @click.prevent="offsetSing--">上一页</a></li>
+                    <li v-for="(singObj,index) in singList" @click="Listen(index)">
+                        {{singObj.name}}
+                    </li>
+                    <li v-show="singList.length > 0"><a href="#" @click.prevent="offsetSing++">下一页</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main>
+            <div class="title" v-if="index !== -1 && singList !== []">
+                正在播放：{{singList[index].name}}
+            </div>
+            <!--  音乐封面与歌词-->
+            <div class="imgbox">
+                <img :src="imgUrl" alt="" ref="imgRotate">
+            </div>
+        </main>
+        <aside class="right">
+            <!--            评论列表-->
+            <div class="comments">
+                <span>热门留言</span>
+                <ul>
+                    <li v-show="offsetComments > 0"><a href="#" @click.prevent="offsetComments--">上一页</a></li>
+                    <li v-for="({content, user: {nickname, avatarUrl}, timeStr},index) in commentList">
+                        <div class="userHeader">
+                            <img :src="avatarUrl" alt=""> <span>{{nickname}}</span>
+                        </div>
+                        <div class="Published">
+                            发布时间：{{timeStr}}
+                        </div>
+                        <div class="userBody">
+                            评论详情：{{content}}
+                        </div>
+                    </li>
+                    <li v-show="commentList.length > 0"><a href="#" @click.prevent="offsetComments++">下一页</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <footer>
+        <div class="controller">
+            <audio style="display: none" controls ref="audio" :src="musicUrl" loop></audio>
+            <span class="iconfont control" v-show="show" @click="play">&#xe627;</span>
+            <span class="iconfont control" v-show="!show" @click="paused">&#xe793;</span>
+            <span>{{arriveTimeToString}}/{{durationToString}}</span>
+            <input type="range" ref="range" @change="change" min="0" max="360" v-model.number="point">
+        </div>
+    </footer>
+</div>
+</body>
+<script src="../../js/axios-0.18.0.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="radio.js"></script>
+<script src="./fontIcon/iconfont.js"></script>
+</html>

@@ -1,0 +1,30 @@
+{
+  "id": "4444871",
+  "name": "播放器",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6623775",
+      "name": "icon_pause",
+      "font_class": "icon_pause",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "10943988",
+      "name": "pm-query-16",
+      "font_class": "pm-query-",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "29672788",
+      "name": "paused",
+      "font_class": "paused",
+      "unicode": "e793",
+      "unicode_decimal": 59283
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+      键盘事件 @keyup为按下键盘抬起后触发的事件，@keydown是指按下键盘后的事件
+      可以使用别名去指定特定按键的事件
+      .enter 按下enter键的触发事件
+      .ctrl
+      .delete
+      .alt
+      .tab   (需要搭配keydown使用)
+      .caps-lock
+      .esc
+      .end
+      .insert
+      其中 ctrl,win,tab需要搭配keydown来使用
+-->
+<div id="root">
+  <input type="text" v-model:value="name" @keyup.ctrl="showInfo">
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    data(){
+      return {
+        name: '12345'
+      }
+    },
+    methods:{
+      showInfo(e){
+        console.log(e.key,e.keyCode)
+        // console.log(e.target.value)
+      }
+    }
+  })
+  vm.$mount("#root")
+</script>
+</html>

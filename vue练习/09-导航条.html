@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    a {
+        text-decoration: none;
+        color: white;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: red;
+        border: 1px solid red;
+    }
+    html {
+        color-scheme: dark;
+        font-size: 24px;
+    }
+    #root {
+        display: flex;
+        margin: 200px auto;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .scroll {
+        width: 500px;
+        mask: linear-gradient(90deg, transparent, white 20%,white 80%, transparent);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    ul {
+        width: max-content;
+        list-style: none;
+        display: flex;
+        animation: scroll 4s normal linear infinite;
+    }
+
+    li {
+        padding: 10px;
+        margin: 10px;
+        background-color: pink;
+    }
+
+    @keyframes scroll {
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    button {
+        width: 20px;
+    }
+
+    ul:hover  {
+        animation-play-state: paused;
+    }
+</style>
+<body>
+<div id="root">
+    <div class="scroll">
+        <ul>
+            <li v-for="node in doubleArr">
+                {{node}}
+            </li>
+        </ul>
+    </div>
+    <a href="#" @click.prevent="addNode">添加节点</a>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                arr: [
+                    'css',
+                    'js',
+                    'vue',
+                    'jquery',
+                    'react',
+                    'post'
+                ]
+            }
+        },
+        methods: {
+            addNode() {
+                const node = prompt('请输入要添加的节点名称：')
+                this.arr.push(node)
+            }
+        },
+        computed: {
+            doubleArr(){
+                return [...this.arr,...this.arr]
+            }
+        }
+    })
+    vm.$mount('#root')
+</script>
+</html>

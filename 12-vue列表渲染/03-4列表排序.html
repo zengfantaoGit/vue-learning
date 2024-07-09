@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <h1>用户列表(数组)</h1>
+    <!--    双向绑定数据 v-model-->
+    <input type="text" placeholder="请输入过滤条件（姓名）" v-model="inputStr"><br>
+<!--    设置排序方式-->
+    <button @click="sortType = 0">原数组</button> <button @click="sortType = 1">升序排列</button> <button @click="sortType = 2">降序排序</button>
+    <ul>
+        <li v-for="(person,index) in filterPersonArr" :key="person.id">
+            名称：{{person.name}}，年龄：{{person.age}}，性别：{{person.sex}}
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                personArr: [
+                    {id: '001', name: '唐僧', age: '18', sex: '男'},
+                    {id: '002', name: '沙僧', age: '12', sex: '男'},
+                    {id: '003', name: '孙悟空', age: '17', sex: '男'},
+                    {id: '004', name: '唐人', age: '20', sex: '男'},
+                    {id: '005', name: '白龙马', age: '15', sex: '女'},
+                ],
+                inputStr: '',
+                sortType: 0 // 0表示原数组，1表示升序，2表示降序
+            }
+        },
+        computed: {
+            filterPersonArr(){
+                let arr = this.personArr.filter((p) => {
+                    return p.name.indexOf(this.inputStr) !== -1
+                })
+                if(this.sortType){
+                    arr.sort((a,b) => {
+                        return this.sortType === 2 ? b.age-a.age : a.age-b.age
+                    })
+                }
+                return arr
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

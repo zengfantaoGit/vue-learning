@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .font{
+        font-size: 25px;
+        font-style: inherit;
+    }
+</style>
+<body>
+<div id="root">
+    <span class="font">{{showTitle}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span @click="flag = !flag">{{showFlag}}</span>
+    <template v-if="flag">
+        <div v-for="(song,index) in songs['《赠汪伦》']" class="font">
+            {{song}}
+        </div>
+    </template>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                flag: true,  //表示是否需要翻折面板
+                songs: {
+                    '《赠汪伦》': [
+                        '李白乘舟将欲行',
+                        '忽闻岸上踏歌声',
+                        '桃花潭水深千尺',
+                        '不及汪伦送我情'
+                    ]
+                }
+            }
+        },
+        computed: {
+            showFlag(){
+                return this.flag ? '收起' : '展开'
+            },
+            showTitle(){
+                return Object.keys(this.songs)[0]
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

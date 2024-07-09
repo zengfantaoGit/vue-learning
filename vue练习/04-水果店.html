@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #root{
+        height:300px;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+<div id="root">
+    <h4>欢迎来到水果店！！！</h4>
+    <h2>苹果{{price}}￥/斤，折扣<{{discount}}折></h2>
+    <h4>请输入你要购买的斤数</h4><input type="text" v-model="weight">
+    <button @click="flag = !flag">结账买单</button>
+    <div v-show="flag">结账单：总价：{{totalPrice}}￥元，折后价：{{disTotalPrice}}￥元，省了：{{reducePrice}}￥元</div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                // discount折扣 默认为8折
+                discount: 8,
+                // 水果价格
+                price: 10,
+                // 水果重量
+                weight: 0,
+                flag: false
+            }
+        },
+        computed:{
+            totalPrice(){
+                return this.weight * this.price
+            },
+            disTotalPrice(){
+                return this.totalPrice * 0.1 * this.discount
+            },
+            reducePrice(){
+                return this.totalPrice - this.disTotalPrice
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

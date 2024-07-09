@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--
+      v-pre指令，会跳过当前标签的vue编译，不会呈现vue的内容
+-->
+<body>
+<div id="root">
+<!--    跳过了{{name}}的插值语句-->
+    <h2 v-pre>{{name}}编译被跳过了</h2>
+    <div v-html="name">你你你</div>
+    <div v-html="htmlStr"></div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                name: '牛魔',
+                htmlStr: '<h2>牛角尖</h2>'
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

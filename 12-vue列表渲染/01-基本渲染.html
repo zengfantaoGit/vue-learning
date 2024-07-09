@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+      条件渲染 v-for (根据传入参数生成对应的标签个数)
+              格式： v-for='(value,index) in 列表' 其中 (value为值，index为下标)
+              且每个标签都需要 :key来保证唯一标识
+-->
+<div id="root">
+    <h1>用户列表(数组)</h1>
+    <ul>
+        <!--    将会批量生成li标签，然后用获取vm对象的数据进行渲染-->
+        <li v-for="(person,index) in personArr" :key="person.id">
+            名称：{{person.name}}，年龄：{{person.age}}
+        </li>
+    </ul>
+
+    <h1>汽车列表(对象)</h1>
+    <ul>
+        <!--    将会批量生成li标签，然后用获取vm对象的数据进行渲染-->
+        <li v-for="(value,key) in car" :key="key">
+            名称：{{value}}，键值：{{key}}
+        </li>
+    </ul>
+
+    <h2 v-for="person in personArr" :key="person.id">
+        {{person}}
+    </h2>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                personArr: [
+                    {id: '001', name: '唐僧', age: '18'},
+                    {id: '002', name: '沙僧', age: '12'},
+                    {id: '003', name: '孙悟空', age: '17'},
+                ],
+                car: {
+                    name: '牛魔',
+                    weight: 67,
+                    color: 'black'
+                }
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

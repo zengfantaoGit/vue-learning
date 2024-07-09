@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./fontIcon/iconfont.css">
+    <script src="fontIcon/iconfont.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .controller {
+            display: flex;
+            margin: 100px auto;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        .control {
+            display: inline-block;
+            font-size: 30px;
+            color: blue;
+            cursor: pointer;
+        }
+
+        input[type='range'] {
+            outline: none;
+            -webkit-appearance: none; /*清除系统默认样式*/
+            width: 100% !important;
+            background: -webkit-linear-gradient(#10a9ff, #10a9ff) no-repeat, #dddddd; /*背景颜色，俩个颜色分别对应上下*/
+            background-size: 0% 100%; /*设置左右宽度比例，这里可以设置为拖动条属性*/
+            height: 2px; /*横条的高度，细的真的比较好看嗯*/
+        }
+
+        /*拖动块的样式*/
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none; /*清除系统默认样式*/
+            height: 10px; /*拖动块高度*/
+            width: 3px; /*拖动块宽度*/
+            background: #10a9ff; /*拖动块背景*/
+        }
+    </style>
+</head>
+<body>
+<div class="controller">
+    <audio style="display: none" controls ref="audio" src="assets/丑八怪.mp3" loop></audio>
+    <span class="iconfont control" v-show="show" @click="play">&#xe627;</span>
+    <span class="iconfont control" v-show="!show" @click="paused">&#xe793;</span>
+    <span>{{arriveTimeToString}}/{{durationToString}}</span>
+    <input type="range" ref="range" @change="change" min="0" max="360" v-model.number="point">
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '.controller',
+        data() {
+            return {
+                show: true,
+                point: 0,
+                duration: 0,
+                arriveTime: 0
+            }
+        },
+        methods: {
+            // audio的js对象内部封装了 play()与pause()方法来控制audio标签的播放
+            play() {
+                console.dir(this.$refs.audio)
+                this.$refs.audio.play()
+                this.arrTime()
+                // 开启定时器，每一秒后就要添加进度
+                this.id = setInterval(this.arrTime, 1000)
+                this.show = false
+            },
+            paused() {
+                this.$refs.audio.pause()
+                // 关闭定时器
+                clearInterval(this.id)
+                this.show = true
+            },
+            change() {
+                const pointSend = this.point * this.$refs.audio.duration / 360
+                this.$refs.audio.currentTime = pointSend
+                // 每次调整播放器就重新播放
+                clearInterval(this.id)
+                this.play()
+            },
+            // 每过一秒就要调整point变量
+            arrTime() {
+                // 增加一秒
+                this.arriveTime = this.$refs.audio.currentTime
+                this.point += 1 / this.$refs.audio.duration * 360
+            },
+            minuteToString(time){
+                const secondInt = Math.floor(time % 60)
+                second = secondInt >= 10 ? `${secondInt}` : `0${secondInt}`
+                minute = Math.floor(time / 60)
+                return minute + ':' + second
+            }
+        },
+        watch: {
+            point() {
+                // 当音乐播放结束时
+                if (this.point >= 360) {
+                    // 清除定时器
+                    clearInterval(this.id)
+                    // 从0开始计数
+                    this.point = 0
+                    if (this.$refs.audio.loop) {
+                        // 重新播放
+                        this.play()
+                    } else {
+                        // 停止播放
+                        this.paused()
+                    }
+                }
+            }
+        },
+        // computed: {
+        // $refs属性是在mounted之后才出现的，若直接在页面调用$refs则会出现undefined错误
+        // 并且$refs是非响应式数据，即使$refs内部数据变化也不会引起重新渲染，不会引起computed属性重新计算
+        // nowTime() {
+        //     console.log(this)
+        //     return this.$refs.audio
+        // },
+        // allTime() {
+        //     if(this.$refs.audio) {
+        //         return this.$refs.audio.duration
+        //     }
+        // }
+        // }
+        updated() {
+            this.duration = this.$refs.audio.duration
+        },
+        computed: {
+            durationToString() {
+                return this.minuteToString(this.duration)
+            },
+            arriveTimeToString() {
+                return this.minuteToString(this.arriveTime)
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+      mvvm模型指代  视图（view)； 视图模型 vue实例对象（viewmodel） 与 模型(model)
+      插值语法可以展示所有vm的属性数据，包括方法
+-->
+<div id="root">
+  <h1>{{name}}</h1>
+<!--    vm的方法-->
+  <h1>{{$emit}}</h1>
+<!--    vm的原型方法 父类方法-->
+    <h1>function2: {{$mount}}</h1>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const x = new Vue({
+    el:'#root',
+    data(){
+      return {
+        name: '没事的'
+      }
+    }
+  })
+  console.log(x)
+</script>
+</html>

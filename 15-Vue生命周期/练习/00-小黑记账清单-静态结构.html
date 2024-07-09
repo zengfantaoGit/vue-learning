@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .red {
+            color: red !important;
+        }
+
+        .search {
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        .my-form {
+            display: flex;
+            margin: 20px 0;
+        }
+
+        .my-form input {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .table > :not(:first-child) {
+            border-top: none;
+        }
+
+        .contain {
+            display: flex;
+            padding: 10px;
+        }
+
+        .list-box {
+            flex: 1;
+            padding: 0 30px;
+        }
+
+        .list-box a {
+            text-decoration: none;
+        }
+
+        .echarts-box {
+            width: 600px;
+            height: 400px;
+            padding: 30px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+
+        tfoot {
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .contain {
+                flex-wrap: wrap;
+            }
+
+            .list-box {
+                width: 100%;
+            }
+
+            .echarts-box {
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="contain">
+        <!-- 左侧列表 -->
+        <div class="list-box">
+
+            <!-- 添加资产 -->
+            <form class="my-form">
+                <input type="text" class="form-control" placeholder="消费名称" v-model.trim="GoodsName"/>
+                <input type="text" class="form-control" placeholder="消费价格" v-model.trim.Number="price"/>
+                <button type="button" class="btn btn-primary" @click="addObj">添加账单</button>
+            </form>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>消费名称</th>
+                    <th>消费价格</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(Obj,index) in ObjList" :key="Obj.id">
+                    <td>{{Obj.id}}</td>
+                    <td>{{Obj.goods}}</td>
+                    <td :class="{'red': Obj.price >= 100}">{{Obj.price.toFixed(2)}}</td>
+                    <!--                点击并且阻止默认事件-->
+                    <td><a href="javascript:;" @click.prevent="deleteObj(index)">删除</a></td>
+                </tr>
+                <!--              <tr>-->
+                <!--                <td>2</td>-->
+                <!--                <td>大衣</td>-->
+                <!--                <td class="red">199.00</td>-->
+                <!--                <td><a href="javascript:;">删除</a></td>-->
+                <!--              </tr>-->
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">消费总计： {{sumPrice.toFixed(2)}}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!--  配置容器-->
+        <!-- 右侧图表 -->
+        <div class="echarts-box" id="main"></div>
+    </div>
+</div>
+<!--    echarts是实现数据可视化的插件-->
+<script src="../../js/echarts.min.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../js/axios-0.18.0.js"></script>
+<script>
+    /**
+     * 接口文档地址：
+     * https://www.apifox.cn/apidoc/shared-24459455-ebb1-4fdc-8df8-0aff8dc317a8/api-53371058
+     *
+     * 功能需求：
+     * 1. 基本渲染
+     * 2. 添加功能
+     * 3. 删除功能
+     * 4. 饼图渲染
+     */
+    const app = new Vue({
+        el: '#app',
+        data: {
+            id: 2,
+            ObjList: [
+                {id: 1, goods: '帽子', price: 99},
+                {id: 2, goods: '大衣', price: 199}
+            ],
+            // 添加商品价格
+            price: '',
+            // 商品名称
+            GoodsName: ''
+        },
+        methods: {
+            // 删除商品
+            deleteObj(index) {
+                if (confirm(`是否删除${this.ObjList[index].goods}商品吗？`)) {
+                    this.ObjList.splice(index, 1)
+                }
+            },
+            // 添加商品
+            addObj() {
+                if (this.GoodsName === '' || this.price === '') {
+                    alert("输入不符合规范，请重新输入！")
+                    return
+                } else if (confirm(`是否添加${this.GoodsName}商品吗？`)) {
+                    this.ObjList.push({id: ++this.id, goods: this.GoodsName, price: this.price})
+                    this.price = ''
+                    this.GoodsName = ''
+                }
+            }
+        },
+        computed: {
+            sumPrice() {
+                return this.ObjList.reduce((prev, current) => {
+                    return prev + current.price
+                }, 0)
+            }
+        },
+        created() {
+            // alert('created')
+            // 用本地localStorage服务器代替axios服务器
+            this.ObjList = JSON.parse(localStorage.getItem('ObjList')) || this.ObjList
+            this.id = Number(localStorage.id) || this.id
+        },
+        mounted() {
+            // 绑定刷新前执行事件
+            window.addEventListener('beforeunload', () => {
+                // alert('马上要结束了！')
+                localStorage.setItem('ObjList', JSON.stringify(this.ObjList))
+                localStorage.setItem('id', this.id)
+            })
+            // 根据容器来绑定可视化图表的位置
+            this.echart = echarts.init(document.querySelector('#main'))
+
+            let options = {
+                title: {
+                    text: '消费账单可视图'
+                },
+                // 图例设置
+                legend: {
+                    // Try 'horizontal'
+                    orient: 'vertical',
+                    right: 100,
+                    left: 'left',
+                    top: 'center'
+                },
+                series: [
+                    {
+                        // data使用 name与value的对象数组
+                        type: 'pie',
+                        data: this.ObjList.map((item) => ({name: item.goods,value: item.price}))
+                    }
+                ],
+                radius: '60%'
+            }
+            this.echart.setOption(options)
+        },
+        updated() {
+            this.echart.setOption({
+                series: [
+                    {
+                        // data使用 name与value的对象数组
+                        type: 'pie',
+                        data: this.ObjList.map((item) => ({name: item.goods,value: item.price}))
+                    }
+                ]
+            })
+        }
+        // 页面关闭监听不到
+        // beforeDestroy() {
+        //   alert(1)
+        //   localStorage.setItem('ObjList',JSON.stringify(this.ObjList))
+        //   localStorage.setItem('id', this.id)
+        // },
+        // destroyed() {
+        //   alert('destroyed')
+        // }
+    })
+</script>
+</body>
+</html>

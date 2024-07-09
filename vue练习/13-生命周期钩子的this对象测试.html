@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    {{a}}
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#root',
+        data(){
+            return {
+                a: 1
+            }
+        },
+        computed: {
+            as() {
+                return this.a + 1
+            }
+        },
+        methods: {
+            shows() {
+                alert(1)
+            }
+        },
+        watch: {
+            a(newA){
+                console.log(newA)
+            }
+        },
+        beforeCreate() {
+            console.log('beforeCreate',this,'-------------------')
+            debugger
+        },
+        created(){
+            console.log('created',this,'-------------------')
+            debugger
+        },
+        beforeMount() {
+            console.log('beforeMount',this,'-------------------')
+            debugger
+        },
+        mounted() {
+            console.log('mounted',this,'-------------------')
+            debugger
+        }
+    })
+</script>
+</html>

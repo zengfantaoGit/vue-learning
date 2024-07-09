@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/vue.js"></script>
+<body>
+<!--
+data的函数式声明不能使用箭头函数，否则它的this指向将不会是Vue实例对象，而是window全局对象。
+而且data的函数式声明会传入vm的实例对象
+
+el的两种方式均可，x.$mount("容器")
+-->
+<div id="root">
+    <h1>{{name}}</h1>
+</div>
+</body>
+<script>
+    <!--  el的两种写法-->
+    //   const x = new Vue({
+    //     // 直接指定
+    //     // el: '#root',
+    //     data:{
+    //       name: '牛魔'
+    //     }
+    //   })
+    // //   使用Vue实例对象进行挂载容器
+    //     x.$mount("#root")
+
+    // data的两种写法
+    const x = new Vue({
+        el: '#root',
+        //  对象式指定
+        // data:{
+        //   name: '牛魔'
+        // }
+        //  函数式指定(后期推荐)
+         data(vm){
+          console.log(this,vm)
+            return {
+              name: '牛萌萌'
+            }
+         }
+        // data: (vm) => {
+        //     // 此时this指向为window对象，因为箭头函数没有自身的this只能根据作用域链向上查找
+        //     console.log(this,vm)
+        //     return {
+        //         name: '牛萌萌'
+        //     }
+        // }
+    })
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <input type="text" v-model:value="name"><br>
+    <input type="text" v-model:value="code"><br>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+    <div>{{fullName}}</div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                name: 'sk',
+                code: 'num'
+            }
+        }
+        , computed: {
+            // 完整形式
+            // fullName:{
+            //     // 第一次读取被调用或者依赖的属性被修改后
+            //     get(){
+            //         console.log('get方法被调用了')
+            //         return this.name + '-' + this.code
+            //     },
+            //     // 当fullName被修改时调用,无返回值
+            //     set(val){
+            //         console.log('set方法被调用了'+val)
+            //         let arr = val.split('-')
+            //         this.name = arr[0]
+            //         this.code = arr[1]
+            //     }
+            // }
+            //     简写形式：（当计算属性只有get方法时才能简写）,此时fullName方法被当作get方法使用
+            fullName() {
+                console.log('get方法被调用了')
+                return this.name + '-' + this.code
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

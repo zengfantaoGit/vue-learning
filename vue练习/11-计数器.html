@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+  <button @click="reduce">-</button>
+  <span>{{count}}</span>
+  <button @click="add">+</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  new Vue({
+    el: '#root',
+    data(){
+      return {
+        count: 1
+      }
+    },
+    methods: {
+      add(){
+        this.count+=1
+        if(this.count > 10) {
+          alert('不能再增大了！')
+          this.count = 10
+        }
+      },
+      reduce(){
+        this.count-=1
+        if(this.count < 0){
+          alert('不能再减小了！')
+          this.count = 0
+        }
+      }
+    }
+  })
+</script>
+</html>

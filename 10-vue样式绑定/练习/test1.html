@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    ul {
+        list-style: none;
+        border-bottom: 2px solid red;
+        /*overflow: hidden;*/
+    }
+    ul::after {
+        display: block;
+        /*清除浮动，本质是clear: both让左右都不允许存在浮动元素，
+        则该元素只能位于下方，但该元素还是处于标准流则会撑大盒子
+        而且该伪元素的显示类型必须是块级元素*/
+        content: '';
+        clear: both
+    }
+    li:first-of-type {
+        margin-left: 20px;
+    }
+    li {
+        float: left;
+    }
+    li > a {
+        display: inline-block;
+        width: 100px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+    }
+    /*方案一使用:focus与:active伪类*/
+    /*a:focus,*/
+    /*a:active {*/
+    /*    background-color: red;*/
+    /*}*/
+    .bg {
+        background-color: red;
+        color: white
+    }
+</style>
+<body>
+<div id="root">
+    <ul>
+        <li v-for="(str,index) in arrStr" @click="num = index">
+            <a href="#" :class="{bg: num===index}">{{str}}</a>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#root',
+        data(){
+            return {
+                arrStr: [
+                    '京东秒杀',
+                    '每日特价',
+                    '类品秒杀'
+                ],
+                // 显示的下标
+                num: 0
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .round {
+            width: 400px;
+            height: 200px;
+            margin: 20px;
+            border-radius: 100px;
+            border: 1px dotted blue;
+        }
+        .round h1 {
+            width: max-content;
+            margin: 50px auto;
+        }
+        .bg {
+            background-color: red;
+        }
+        .shadow {
+            box-shadow: 2px 2px 8px 2px;
+        }
+    </style>
+</head>
+<!--
+        样式的动态绑定与其他属性类似
+        :class='{类名1： 布尔值1，类名2：布尔值2}'
+        根据布尔值来判断对应类名是否渲染到标签的class属性
+        或者 :class='[类名1,类名2]' 一次性将类名渲染到class属性
+-->
+<body>
+<div id="root">
+    <div class="round" :class="{'bg': isBg, 'shadow': isShadow}">
+        <h1>你好啊</h1>
+    </div>
+    <div class="round" :class="['bg','shadow']">
+        <h1>吃饭</h1>
+    </div>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#root',
+        data(){
+            return {
+                isBg: false,
+                isShadow: true
+            }
+        }
+    })
+</script>
+</html>

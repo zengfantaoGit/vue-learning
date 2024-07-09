@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+      事件绑定：
+          v-on指令可以对标签进行事件绑定操作，例如 v-on:click='方法名' 绑定点击事件
+          而处理方法应当放入到Vue实例对象的methods对象里面,最终会存在于vm对象上
+          可以直接使用vm.方法名 调用该方法
+          v-on:click可以缩写成为@click ,其他同理
+-->
+<div id="root">
+    <h1>{{name}}</h1>
+    <h1>{{showInfo()}}</h1>
+    <h1>{{shows}}</h1>
+    <button v-on:click="setName">点击一下</button>
+    <button @click="showInfo($event,1234)">再来一下</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const x = new Vue({
+        el: '#root',
+        data() {
+            return {
+                name: 'anbcds'
+            }
+        },
+        methods: {
+            setName: function () {
+                this.name = '开心就搞'
+            },
+            showInfo(event, val) {
+                console.log("showInfo")
+            }
+        },
+        computed:{
+            shows(){
+                console.log("shows")
+                return "sadasf"
+            }
+        }
+    })
+</script>
+</html>

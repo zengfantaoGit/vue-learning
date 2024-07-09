@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            margin: 100px auto;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        tr:first-of-type th {
+            background-color: blue;
+            color: white;
+        }
+        th,td {
+            padding: 10px 30px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <table>
+        <tr>
+            <th>编号</th>
+            <th>汽车名称</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for="(Obj,index) in arrObj" :key="Obj.id">
+            <td>{{Obj.id}}</td>
+            <td>{{Obj.name}}</td>
+            <td>{{Obj.createTime}}</td>
+            <td><button @click="deleteObj(index)">删除</button></td>
+        </tr>
+        <tr v-show="!arrObj.length">
+            <th colspan="4">啥都没有啦。。。。。</th>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+        data(){
+            return {
+                arrObj: [
+                    {id:1,name:'奥迪',createTime:'2020-08-01'},
+                    {id:2,name:'宝马',createTime:'2020-08-02'},
+                    {id:3,name:'奔驰',createTime:'2020-08-03'},
+                ]
+            }
+        },
+        methods: {
+            deleteObj(index){
+                // 移除元素
+                this.arrObj.splice(index,1)
+            }
+        }
+    }).$mount("#app")
+</script>
+</html>

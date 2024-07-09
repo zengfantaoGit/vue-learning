@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+            列表过滤：
+                1.watch监听实现
+                2.computed计算属性
+                3.v-show实现
+-->
+<div id="root">
+    <h1>用户列表(数组)</h1>
+    <!--    双向绑定数据 v-model-->
+    <input type="text" placeholder="请输入过滤条件（姓名）" v-model="inputStr"><br>
+    <!--    <ul>-->
+    <!--        &lt;!&ndash;    将会批量生成li标签，然后用获取vm对象的数据进行渲染&ndash;&gt;-->
+    <!--        <li v-for="(person,index) in filterPersonArr" :key="person.id">-->
+    <!--            名称：{{person.name}}，年龄：{{person.age}}，性别：{{person.sex}}-->
+    <!--        </li>-->
+    <!--    </ul>-->
+
+    <ul>
+        <!--    v-show方式实现-->
+        <!--    将会批量生成li标签，然后用获取vm对象的数据进行渲染-->
+        <li v-for="(person,index) in personArr" :key="person.id" v-show="show(person)">
+            名称：{{person.name}}，年龄：{{person.age}}，性别：{{person.sex}}
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    // const vm = new Vue({
+    //     data() {
+    //         return {
+    //             personArr: [
+    //                 {id: '001', name: '唐僧', age: '18', sex: '男'},
+    //                 {id: '002', name: '沙僧', age: '12', sex: '男'},
+    //                 {id: '003', name: '孙悟空', age: '17', sex: '男'},
+    //                 {id: '004', name: '唐人', age: '18', sex: '男'},
+    //             ],
+    //             filterPersonArr: [],
+    //             inputStr: ''
+    //         }
+    //     },
+    //     watch: {
+    //         //     监听inputStr的变化，每次变化都将重新查询一次
+    //         inputStr: {
+    //             handler(val) {
+    //                 this.filterPersonArr = this.personArr.filter((p) => {
+    //                     // 判断p.name字符串是否包含val
+    //                     return p.name.indexOf(val) !== -1
+    //                 })
+    //             },
+    //             // 当Vue对象创建时，自动调用一次handler方法
+    //             immediate: true
+    //         }
+    //     }
+    // })
+
+    // const vm = new Vue({
+    //     data() {
+    //         return {
+    //             personArr: [
+    //                 {id: '001', name: '唐僧', age: '18', sex: '男'},
+    //                 {id: '002', name: '沙僧', age: '12', sex: '男'},
+    //                 {id: '003', name: '孙悟空', age: '17', sex: '男'},
+    //                 {id: '004', name: '唐人', age: '18', sex: '男'},
+    //             ],
+    //             inputStr: ''
+    //         }
+    //     },
+    //     computed:{
+    //         filterPersonArr(){
+    //             return this.personArr.filter((p) => {
+    //                 return p.name.indexOf(this.inputStr) !== -1
+    //             })
+    //         }
+    //     }
+    // })
+
+    // v-show方式实现
+    const vm = new Vue({
+        data() {
+            return {
+                personArr: [
+                    {id: '001', name: '唐僧', age: '18', sex: '男'},
+                    {id: '002', name: '沙僧', age: '12', sex: '男'},
+                    {id: '003', name: '孙悟空', age: '17', sex: '男'},
+                    {id: '004', name: '唐人', age: '18', sex: '男'},
+                ],
+                inputStr: ''
+            }
+        },
+        methods: {
+            // 从每个li标签中传入的person信息
+            show(person) {
+                console.log("show被调用了",person)
+                return person.name.indexOf(this.inputStr) !== -1
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>

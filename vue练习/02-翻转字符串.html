@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+<input type="text" placeholder="请输入字符串！" v-model="inputStr" @keydown.enter="setArr">
+  <br><br>
+  <span>结果字符串：{{arrStr}}</span>
+  <br><br>
+  <button @click="flag = !flag">点击翻转字符串</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    data(){
+      return {
+        // 总字符串
+        arrStr: '',
+        // 输入字符串
+        inputStr: '',
+        // 判断是否翻转
+        flag: false
+      }
+    },
+    methods:{
+      setArr(){
+        if(this.arrStr !== ''){
+          this.arrStr += ' '
+        }
+        this.arrStr += this.inputStr
+        this.inputStr = ''
+      }
+    },
+    watch: {
+      // 对flag属性进行监听，若变化则翻转字符串
+      flag(newFlag, oldFlag){
+        let arr = this.arrStr.split(' ')
+        let ans = ''
+        for (let i = arr.length - 1; i >= 0; i--) {
+          if(ans !== ''){
+            ans += ' '
+          }
+          ans += arr[i].split('').reverse().join('')
+        }
+        this.arrStr = ans
+      }
+    }
+  })
+  vm.$mount("#root")
+</script>
+</html>

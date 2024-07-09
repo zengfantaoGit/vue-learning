@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+
+
+-->
+<div id="root">
+    <!--    使用组件标签显示页面-->
+    <app></app>
+</div>
+</body>
+<script src="../../js/vue.js"></script>
+<script>
+    const student = Vue.extend({
+        template: `
+          <div>
+          <h2>学生名称：{{ name }}</h2>
+          <h2>学生年龄：{{ age }}</h2>
+          </div>
+        `,
+        data() {
+            return {
+                name: '对身份',
+                age: 18
+            }
+        }
+    })
+
+    // 生成school组件
+    const school = Vue.extend({
+        components:{
+            // 组件中注册组件，此时该组件属于父组件
+            student
+        },
+        name: 'ssddd',
+        // 子组件需要在父组件中使用
+        template: `
+          <div>
+          <h2>学校名称：{{ name }}</h2>
+          <h2>学校地址：{{ address }}</h2>
+          <button @click="show">点击</button>
+          <hr>
+          <student></student>
+          </div>
+        `,
+        data() {
+            return {
+                name: '牛魔',
+                address: '是单独收费'
+            }
+        },
+        methods:{
+            show(){
+                alert(1)
+            }
+        }
+    })
+
+    const hello = Vue.extend({
+        template: `<h1>hello:{{name}}</h1>`,
+        data(){
+            return {
+                name: 'hello',
+                school: {
+                    name: 'dfsdf'
+                }
+            }
+        }
+    })
+    // hello.$set(this.school,'address','幅度萨芬')
+    // 标准化开发中常常使用app组件控制其他组件，自己交给vm实例管理
+    const app = Vue.extend({
+        template:  `
+<!--          需要包含在一个根节点下-->
+            <div>
+            <hello></hello>
+            <school></school>
+            </div>
+        `,
+        components:{
+            school,
+            hello
+        },
+        data(){
+            return {
+                aaa:{
+                    sss:'1'
+                }
+            }
+        }
+    })
+
+    const vm = new Vue({
+        el: '#root',
+        // 注册组件（局部注册）
+        components: {
+            // 可以用school的简写形式，key是组件被注册的名称，value是构建组件
+            // school: school,
+            app
+        },
+        data(){
+            return {
+                aaa:{
+                    sss:'1'
+                }
+            }
+        }
+    })
+
+    console.log(vm)
+</script>
+</html>

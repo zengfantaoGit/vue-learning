@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  .div1{
+    height: 50px;
+      background-color: pink;
+      padding: 10px;
+  }
+  #root{
+      height: 100px;
+      background-color: red;
+      padding: 20px;
+  }
+  .div2{
+      height: 50px;
+      background-color: green;
+      padding: 10px;
+  }
+</style>
+<script src="../js/vue.js"></script>
+<body>
+<!--
+        事件阶段当处理时
+        捕获阶段    从最外层父元素 一直到 子元素
+        冒泡阶段    从子元素到最外层父元素
+        而且事件执行默认是冒泡阶段开始
+        .stop阻止冒泡事件
+        .capture在捕获阶段被捕获后直接运行
+        .prevent阻止默认事件，例如a标签的跳转事件
+        .once只会运行一次的事件
+        .number接收数据自动转成数字
+        .trim去掉首尾空格
+-->
+<!--
+capture当捕获阶段被捕获事件时，直接触发该事件
+-->
+<div id="root">
+  <div class="div1" @click="showInfo($event,'div')">
+<!--      .stop阻止冒泡事件，此时将不会继续向外层冒泡，此时再点击时只会显示button-->
+    <button @click.stop="showInfo($event,'button')">点击一下</button>
+  </div>
+
+
+<!--    .prevent将会阻止标签的默认事件，此时将不会进行跳转-->
+    <a href="http://www.baidu.com" @click.prevent="showInfo($event, 'a')">百度一下</a>
+
+
+<!--    .once将会只运行一次的事件-->
+    <div class="div2" @mouseenter.once="showInfo($event, '我只显示一次')"></div>
+</div>
+</body>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        methods:{
+            showInfo(e,a){
+                alert(a)
+            }
+        }
+    })
+</script>
+</html>

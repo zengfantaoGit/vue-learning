@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+           Vue实例对象中,watch默认不检测多层内部的属性变化。
+            若要监听，则在配置项中添加deep属性
+-->
+<div id="root">
+    <div>今天天气很{{weather}}</div>
+    <br>
+    <button @click="changeWeather">切换天气</button>
+    <br><br><br><br>
+    <h2>a&nbsp;=&nbsp;{{numbers.a}}</h2>
+    <button @click="numbers.a++">点击后a加一</button>
+    <br>
+    <h2>b&nbsp;=&nbsp;{{numbers.b}}</h2>
+    <button @click="numbers.b++">点击后b加一</button>
+</div>
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        data() {
+            return {
+                isHot: true,
+                numbers:{
+                    a: 1,
+                    b: 1
+                }
+            }
+        }
+        , computed: {
+            weather(){
+                return this.isHot ? '炎热' : '凉爽'
+            }
+        }
+        , methods: {
+            changeWeather(){
+                this.isHot = !this.isHot
+            }
+        }
+        // 配置监听属性
+        , watch: {
+            // 配置被监听属性
+            isHot: {
+                handler(newValue, oldValue){
+                    console.log("isHot检测到变化！",newValue,oldValue)
+                }
+            },
+            weather:{
+                handler(newValue, oldValue) {
+                    console.log("Weather检测到变化！",newValue,oldValue)
+                }
+            },
+        //     多层级监听属性
+            "numbers.a":{
+                handler(){
+                    console.log("number.a被改变了！")
+                }
+            },
+        //     全部监听
+            numbers:{
+                // 开启全局监听，不开启的默认检测numbers的内存地址是否被修改
+                deep: true,
+                handler(a,b,c,d){
+                    console.log(a,b,c,d)
+                }
+            }
+        }
+    })
+    vm.$mount("#root")
+</script>
+</html>
