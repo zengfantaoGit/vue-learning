@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/01-vue初始" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/3d_pic" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/vue-purchase" vcs="Git" />
   </component>
