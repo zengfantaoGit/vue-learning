@@ -19,7 +19,10 @@
     components: {App}
   })
   console.log(111)
-
+  new Promise((resolve, reject) => {
+      resolve(1)
+  }).then(res => {
+      console.log(res)})
 
 </script>
 </html>
